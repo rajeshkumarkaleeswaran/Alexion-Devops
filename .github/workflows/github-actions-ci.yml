@@ -5,8 +5,8 @@ on:
   pull_request:
     branches: [ "main" ]
 
-deploy:
-  get_caller_identity:
+jobs:
+  deploy:
     name: Deploy Site
     runs-on: ubuntu-latest
     permissions:
@@ -15,7 +15,6 @@ deploy:
     steps:
       - name: Checkout code
         uses: actions/checkout@v3
-      
       - name: Configure AWS credentials from Test account
         uses: aws-actions/configure-aws-credentials@v4
         with:
@@ -29,9 +28,10 @@ deploy:
       - name: Build, tag, and push docker image to Amazon ECR
         env:
           REGISTRY: ${{ steps.login-ecr.outputs.registry }}
-          REPOSITORY: alexion-boce
+          REPOSITORY: primuslearning
           IMAGE_TAG: 1.1
         run: |
           docker build -t $REGISTRY/$REPOSITORY:$IMAGE_TAG .
           docker push $REGISTRY/$REPOSITORY:$IMAGE_TAG
+
 
