@@ -28,7 +28,7 @@ jobs:
       - name: Build, tag, and push docker image to Amazon ECR
         env:
           REGISTRY: ${{ steps.login-ecr.outputs.registry }}
-          REPOSITORY: primuslearning
+          REPOSITORY: alexion-boce
           IMAGE_TAG: 1.1
         run: |
           docker build -t $REGISTRY/$REPOSITORY:$IMAGE_TAG .
